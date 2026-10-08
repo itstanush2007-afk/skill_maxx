@@ -21,6 +21,7 @@ import {
   saveProfile,
   getCurrentUserProfile,
   getAuthenticatedUser,
+  generateUUID,
 } from '../../lib/supabase/profile';
 import {
   ArrowLeft,
@@ -59,6 +60,7 @@ export const OnboardingWizard: React.FC<{ initialUserId?: string }> = ({
 
   // Form fields
   const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
   const [department, setDepartment] = useState('');
   const [year, setYear] = useState('');
   const [bio, setBio] = useState('');
@@ -93,6 +95,7 @@ export const OnboardingWizard: React.FC<{ initialUserId?: string }> = ({
           if (existingProfile && existingProfile.full_name) {
             // Existing profile found in Supabase! Prefill all fields
             setFullName(existingProfile.full_name);
+            if (existingProfile.email) setEmail(existingProfile.email);
             setDepartment(existingProfile.department || '');
             setYear(existingProfile.year || '');
             setBio(existingProfile.bio || '');
@@ -106,9 +109,13 @@ export const OnboardingWizard: React.FC<{ initialUserId?: string }> = ({
             restoreLocalDraft();
           }
         }
-        // Check for step query parameter (e.g. ?step=2 from Add Skill, ?step=4 from Update Availability)
+        // Check for URL parameters (e.g. ?step=2, ?email=..., ?name=...)
         if (typeof window !== 'undefined') {
           const params = new URLSearchParams(window.location.search);
+          const emailParam = params.get('email');
+          if (emailParam && isMounted) setEmail(emailParam);
+          const nameParam = params.get('name');
+          if (nameParam && isMounted) setFullName(nameParam);
           const stepParam = params.get('step');
           if (stepParam) {
             const stepNum = parseInt(stepParam, 10);
@@ -247,14 +254,15 @@ export const OnboardingWizard: React.FC<{ initialUserId?: string }> = ({
 
     // Resolve target authenticated user ID
     let resolvedUserId = authUserId;
-    if (!resolvedUserId) {
+    if (!resolvedUserId || resolvedUserId === '11111111-1111-1111-1111-111111111111') {
       const user = await getAuthenticatedUser();
-      resolvedUserId = user?.id || '11111111-1111-1111-1111-111111111111';
+      resolvedUserId = user?.id || generateUUID();
     }
 
     const payload: SaveProfilePayload = {
       user_id: resolvedUserId,
       full_name: fullName.trim(),
+      email: email.trim() || undefined,
       department,
       year,
       bio: bio.trim(),
@@ -396,12 +404,14 @@ export const OnboardingWizard: React.FC<{ initialUserId?: string }> = ({
         {currentStep === 1 && (
           <Step1AboutYou
             fullName={fullName}
+            email={email}
             department={department}
             year={year}
             bio={bio}
             avatarUrl={avatarUrl}
             onChange={(fields) => {
               if (fields.fullName !== undefined) setFullName(fields.fullName);
+              if (fields.email !== undefined) setEmail(fields.email);
               if (fields.department !== undefined) setDepartment(fields.department);
               if (fields.year !== undefined) setYear(fields.year);
               if (fields.bio !== undefined) setBio(fields.bio);

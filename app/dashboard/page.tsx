@@ -29,7 +29,12 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 import { CompleteUserProfile } from '../../types/profile';
-import { getCurrentUserProfile } from '../../lib/supabase/profile';
+import {
+  getCurrentUserProfile,
+  getProfilesForMatching,
+  calculateReciprocalMatches,
+  PeerMatchItem,
+} from '../../lib/supabase/profile';
 
 export default function DashboardPage() {
   const [profile, setProfile] = useState<CompleteUserProfile | null>(null);
@@ -60,6 +65,8 @@ export default function DashboardPage() {
     },
   ]);
 
+  const [dynamicPeers, setDynamicPeers] = useState<PeerMatchItem[]>([]);
+
   useEffect(() => {
     async function loadData() {
       setLoading(true);
@@ -72,43 +79,60 @@ export default function DashboardPage() {
         }
       }
 
-      // Check localStorage first for instant client response
+      let activeProfile: CompleteUserProfile | null = null;
+
+      // 1. Fetch current user profile
       try {
-        const localData = localStorage.getItem('skillmaxx_user_profile');
-        if (localData) {
-          const parsed = JSON.parse(localData);
-          setProfile({
-            id: parsed.user_id,
-            user_id: parsed.user_id,
-            full_name: parsed.full_name,
-            department: parsed.department,
-            year: parsed.year,
-            bio: parsed.bio,
-            avatar_url: parsed.avatar_url,
-            availability: parsed.availability,
-            is_onboarded: true,
-            teach_skills: parsed.teach_skills || [],
-            learn_skills: parsed.learn_skills || [],
-          });
-          setLoading(false);
-          return;
+        const { data } = await getCurrentUserProfile();
+        if (data) {
+          activeProfile = data;
+          setProfile(data);
+        } else {
+          // Instant local storage fallback
+          const localData = typeof window !== 'undefined' ? localStorage.getItem('skillmaxx_user_profile') : null;
+          if (localData) {
+            const parsed = JSON.parse(localData);
+            activeProfile = {
+              id: parsed.user_id,
+              user_id: parsed.user_id,
+              full_name: parsed.full_name,
+              department: parsed.department,
+              year: parsed.year,
+              bio: parsed.bio,
+              avatar_url: parsed.avatar_url,
+              availability: parsed.availability,
+              is_onboarded: true,
+              teach_skills: parsed.teach_skills || [],
+              learn_skills: parsed.learn_skills || [],
+            };
+            setProfile(activeProfile);
+          }
         }
       } catch (e) {
         console.error(e);
       }
 
-      // Fetch from Supabase
-      const { data } = await getCurrentUserProfile();
-      if (data) {
-        setProfile(data);
+      // 2. Fetch all student profiles and calculate dynamic reciprocal matches
+      try {
+        const curId = activeProfile?.user_id || activeProfile?.id;
+        const { data: pool } = await getProfilesForMatching(curId);
+        if (pool && pool.length > 0 && activeProfile) {
+          const matches = calculateReciprocalMatches(activeProfile, pool);
+          if (matches.length > 0) {
+            setDynamicPeers(matches);
+          }
+        }
+      } catch (e) {
+        console.error('Error calculating dynamic peer matches:', e);
       }
+
       setLoading(false);
     }
 
     loadData();
   }, []);
 
-  const peersList = [
+  const defaultFallbackPeers: PeerMatchItem[] = [
     {
       id: 'match-1',
       name: 'Alex Rivera',
@@ -153,7 +177,8 @@ export default function DashboardPage() {
     },
   ];
 
-  const activePeer = peersList.find((p) => p.id === activeMatchDetailId);
+  const peersList = dynamicPeers.length > 0 ? dynamicPeers : defaultFallbackPeers;
+  const activePeer = peersList.find((p) => p.id === activeMatchDetailId) || peersList[0];
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F8F9FB] text-slate-900 selection:bg-[#7B57FF] selection:text-white">
@@ -438,8 +463,18 @@ export default function DashboardPage() {
                 </div>
                 <button
                   type="button"
-                  onClick={() => {
+                  onClick={async () => {
                     setIsSearchingMatches(true);
+                    if (profile) {
+                      const curId = profile.user_id || profile.id;
+                      const { data: pool } = await getProfilesForMatching(curId);
+                      if (pool && pool.length > 0) {
+                        const matches = calculateReciprocalMatches(profile, pool);
+                        if (matches.length > 0) {
+                          setDynamicPeers(matches);
+                        }
+                      }
+                    }
                     setTimeout(() => {
                       setIsSearchingMatches(false);
                       setMatchResultsFound(true);

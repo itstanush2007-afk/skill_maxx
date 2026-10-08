@@ -7,12 +7,14 @@ import { Sparkles } from 'lucide-react';
 
 interface Step1Props {
   fullName: string;
+  email?: string;
   department: string;
   year: string;
   bio: string;
   avatarUrl: string;
   onChange: (fields: Partial<{
     fullName: string;
+    email: string;
     department: string;
     year: string;
     bio: string;
@@ -52,6 +54,7 @@ const AVATAR_PRESETS = [
 
 export const Step1AboutYou: React.FC<Step1Props> = ({
   fullName,
+  email,
   department,
   year,
   bio,
@@ -128,15 +131,26 @@ export const Step1AboutYou: React.FC<Step1Props> = ({
         </div>
       </div>
 
-      {/* Name Input */}
-      <Input
-        label="Full Name"
-        placeholder="e.g. Alex Sharma"
-        value={fullName}
-        onChange={(e) => onChange({ fullName: e.target.value })}
-        error={errors.fullName}
-        required
-      />
+      {/* Name and Email Inputs Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Input
+          label="Full Name"
+          placeholder="e.g. Alex Sharma"
+          value={fullName}
+          onChange={(e) => onChange({ fullName: e.target.value })}
+          error={errors.fullName}
+          required
+        />
+
+        <Input
+          label="Campus Email"
+          type="email"
+          placeholder="e.g. name@example.com"
+          value={email || ''}
+          onChange={(e) => onChange({ email: e.target.value })}
+          error={errors.email}
+        />
+      </div>
 
       {/* Academic Fields Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

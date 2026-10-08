@@ -46,6 +46,7 @@ export interface Profile {
   id: string;               // UUID mapped to auth.users.id
   user_id: string;          // Alias for id to ensure multi-module compatibility
   full_name: string;
+  email?: string;
   department: string;       // e.g. 'Computer Science', 'Electronics', 'Information Technology'
   year: string;             // e.g. '1st Year', '2nd Year', '3rd Year', '4th Year'
   bio?: string | null;
@@ -71,6 +72,7 @@ export interface CompleteUserProfile extends Profile {
 export interface MatchingProfileData {
   user_id: string;
   full_name: string;
+  email?: string;
   department: string;
   year: string;
   bio: string | null;
@@ -89,6 +91,7 @@ export interface MatchingProfileData {
 export interface SaveProfilePayload {
   user_id: string;
   full_name: string;
+  email?: string;
   department: string;
   year: string;
   bio?: string;

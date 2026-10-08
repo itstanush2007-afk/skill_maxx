@@ -39,9 +39,10 @@ export default function ProfilePage() {
           const parsed = JSON.parse(local);
           if (parsed.full_name) {
             setProfile({
-              id: parsed.user_id || '11111111-1111-1111-1111-111111111111',
-              user_id: parsed.user_id || '11111111-1111-1111-1111-111111111111',
+              id: parsed.user_id,
+              user_id: parsed.user_id,
               full_name: parsed.full_name,
+              email: parsed.email,
               department: parsed.department,
               year: parsed.year,
               bio: parsed.bio,
