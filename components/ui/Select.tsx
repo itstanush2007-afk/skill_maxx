@@ -29,28 +29,28 @@ export const Select: React.FC<SelectProps> = ({
       {label && (
         <label
           htmlFor={selectId}
-          className="block text-xs font-semibold uppercase tracking-wider text-slate-300"
+          className="block text-xs font-mono font-semibold uppercase tracking-wider text-slate-300"
         >
-          {label} {props.required && <span className="text-emerald-400">*</span>}
+          {label} {props.required && <span className="text-red-400">*</span>}
         </label>
       )}
       <div className="relative">
         <select
           id={selectId}
-          className={`w-full appearance-none rounded-xl bg-slate-900/80 border ${
+          className={`w-full appearance-none rounded-xl bg-[#030712] border ${
             error
               ? 'border-red-500/80 focus:border-red-500 focus:ring-red-500/20'
-              : 'border-slate-800 focus:border-emerald-500 focus:ring-emerald-500/20'
-          } px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 transition-all focus:outline-none focus:ring-2 pr-10 ${className}`}
+              : 'border-slate-800 focus:border-red-500 focus:ring-red-500/20'
+          } px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 transition-all focus:outline-none focus:ring-2 font-mono pr-10 ${className}`}
           {...props}
         >
           {placeholder && (
-            <option value="" disabled className="bg-slate-900 text-slate-500">
+            <option value="" disabled className="bg-[#090d16] text-slate-500">
               {placeholder}
             </option>
           )}
           {options.map((opt) => (
-            <option key={opt.value} value={opt.value} className="bg-slate-900 text-slate-100">
+            <option key={opt.value} value={opt.value} className="bg-[#090d16] text-slate-100">
               {opt.label}
             </option>
           ))}

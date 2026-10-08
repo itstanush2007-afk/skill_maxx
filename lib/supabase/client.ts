@@ -30,3 +30,18 @@ export function getSupabaseClient(): SupabaseClient {
 }
 
 export const supabase = getSupabaseClient();
+
+/**
+ * Checks whether valid Supabase credentials have been configured.
+ * Returns false when environment variables are missing or set to placeholder values.
+ */
+export function isSupabaseConfigured(): boolean {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  return Boolean(
+    url &&
+    key &&
+    !url.includes('placeholder') &&
+    !key.includes('placeholder')
+  );
+}

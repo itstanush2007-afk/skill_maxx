@@ -29,11 +29,11 @@ export const Button: React.FC<ButtonProps> = ({
 
   const variantStyles = {
     primary:
-      'bg-emerald-500 hover:bg-emerald-400 text-black shadow-lg shadow-emerald-500/20 focus:ring-emerald-400',
+      'bg-[#7B57FF] hover:bg-[#6C44FF] text-white font-medium shadow-md shadow-purple-500/20 focus:ring-purple-400 border-0',
     secondary:
-      'bg-slate-800 hover:bg-slate-700 text-slate-100 border border-slate-700 focus:ring-slate-400',
+      'bg-[#1C1833] hover:bg-[#272147] text-slate-100 border border-purple-500/20 focus:ring-purple-400',
     outline:
-      'bg-transparent hover:bg-slate-800/80 text-slate-200 border border-slate-700 hover:border-slate-500 focus:ring-slate-400',
+      'bg-transparent hover:bg-purple-500/10 text-purple-200 border border-purple-500/30 focus:ring-purple-400',
     ghost:
       'bg-transparent hover:bg-slate-800 text-slate-300 hover:text-white focus:ring-slate-500',
     danger:

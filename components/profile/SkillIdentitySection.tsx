@@ -125,17 +125,17 @@ export const SkillIdentitySection: React.FC<SkillIdentitySectionProps> = ({
       <div className="flex items-center gap-1" title={`Proficiency level: ${level}`}>
         <div
           className={`h-1.5 w-3.5 rounded-full ${
-            bars >= 1 ? 'bg-emerald-400' : 'bg-slate-700'
+            bars >= 1 ? 'bg-gradient-to-r from-red-500 to-orange-400' : 'bg-slate-800'
           }`}
         />
         <div
           className={`h-1.5 w-3.5 rounded-full ${
-            bars >= 2 ? 'bg-emerald-400' : 'bg-slate-700'
+            bars >= 2 ? 'bg-gradient-to-r from-orange-400 to-amber-400' : 'bg-slate-800'
           }`}
         />
         <div
           className={`h-1.5 w-3.5 rounded-full ${
-            bars >= 3 ? 'bg-emerald-400' : 'bg-slate-700'
+            bars >= 3 ? 'bg-amber-400 shadow-sm shadow-amber-500/50' : 'bg-slate-800'
           }`}
         />
       </div>
@@ -148,17 +148,17 @@ export const SkillIdentitySection: React.FC<SkillIdentitySectionProps> = ({
       <div className="flex items-center gap-1" title={`Target desired level: ${level}`}>
         <div
           className={`h-1.5 w-3.5 rounded-full ${
-            bars >= 1 ? 'bg-blue-400' : 'bg-slate-700'
+            bars >= 1 ? 'bg-cyan-400' : 'bg-slate-800'
           }`}
         />
         <div
           className={`h-1.5 w-3.5 rounded-full ${
-            bars >= 2 ? 'bg-blue-400' : 'bg-slate-700'
+            bars >= 2 ? 'bg-cyan-400' : 'bg-slate-800'
           }`}
         />
         <div
           className={`h-1.5 w-3.5 rounded-full ${
-            bars >= 3 ? 'bg-blue-400' : 'bg-slate-700'
+            bars >= 3 ? 'bg-cyan-300 shadow-sm shadow-cyan-500/50' : 'bg-slate-800'
           }`}
         />
       </div>
@@ -171,23 +171,22 @@ export const SkillIdentitySection: React.FC<SkillIdentitySectionProps> = ({
       {showTitle && (
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-1.5">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Skill Identity & Exchange Profile</span>
+            <div className="text-red-400 font-mono text-[11px] font-bold tracking-wider uppercase mb-1">
+              // COMPLEMENTARY SKILL EXCHANGE
             </div>
-            <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
-              Complementary Skill Exchange
+            <h3 className="text-xl sm:text-2xl font-black text-white uppercase tracking-tight">
+              Skill Identity & Exchange Profile
             </h3>
             <p className="text-xs sm:text-sm text-slate-400">
               Clear breakdown of competencies offered and growth aspirations sought for campus peer swaps.
             </p>
           </div>
 
-          <div className="flex items-center gap-2 self-start sm:self-auto bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-xl text-xs text-slate-300">
-            <ArrowRightLeft className="w-3.5 h-3.5 text-emerald-400" />
-            <span className="font-semibold font-mono text-white">{totalOffered}</span> Offered
+          <div className="flex items-center gap-2 self-start sm:self-auto bg-[#090d16] border border-slate-800 px-3.5 py-1.5 rounded-xl text-xs text-slate-300 font-mono">
+            <ArrowRightLeft className="w-3.5 h-3.5 text-red-400" />
+            <span className="font-bold text-white">{totalOffered}</span> Offered
             <span className="text-slate-600">/</span>
-            <span className="font-semibold font-mono text-blue-400">{totalSought}</span> Seeking
+            <span className="font-bold text-cyan-400">{totalSought}</span> Seeking
           </div>
         </div>
       )}
@@ -197,29 +196,26 @@ export const SkillIdentitySection: React.FC<SkillIdentitySectionProps> = ({
         {/* ========================================================= */}
         {/* PILLAR 1: CAN TEACH ("I know these things") */}
         {/* ========================================================= */}
-        <div className="rounded-3xl bg-slate-900/80 border border-emerald-500/20 p-5 sm:p-6 backdrop-blur-xl relative overflow-hidden flex flex-col justify-between space-y-5 shadow-lg shadow-black/20 group">
-          {/* Subtle Ambient Glow */}
-          <div className="absolute top-0 right-0 w-48 h-48 bg-emerald-500/5 rounded-full blur-2xl pointer-events-none" />
-
+        <div className="rounded-2xl bg-[#090d16] border border-slate-800 p-5 sm:p-6 relative overflow-hidden flex flex-col justify-between space-y-5 shadow-xl group">
           <div className="space-y-4">
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3.5">
+            <div className="flex items-center justify-between border-b border-slate-800/80 pb-3.5">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-sm">
+                <div className="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400 shadow-sm">
                   <GraduationCap className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-400 block font-mono">
-                    Can Teach
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-red-400 block font-mono">
+                    // CAN TEACH
                   </span>
-                  <h4 className="text-base sm:text-lg font-bold text-white tracking-tight">
-                    "I know these things"
+                  <h4 className="text-base sm:text-lg font-black text-white uppercase tracking-tight">
+                    Offered Competencies
                   </h4>
                 </div>
               </div>
 
-              <span className="text-xs font-mono font-bold text-emerald-300 bg-emerald-500/10 px-2.5 py-1 rounded-xl border border-emerald-500/20">
-                {teachSkills.length} skill{teachSkills.length !== 1 ? 's' : ''}
+              <span className="text-xs font-mono font-bold text-red-300 bg-red-500/10 px-2.5 py-1 rounded-lg border border-red-500/20">
+                {teachSkills.length} SKILL{teachSkills.length !== 1 ? 'S' : ''}
               </span>
             </div>
 
@@ -236,17 +232,17 @@ export const SkillIdentitySection: React.FC<SkillIdentitySectionProps> = ({
                   return (
                     <div
                       key={skill.skill_name}
-                      className="p-3 sm:p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800/90 hover:border-emerald-500/30 transition-all flex items-center justify-between gap-3 group/item"
+                      className="p-3 sm:p-3.5 rounded-xl bg-[#030712] border border-slate-800/90 hover:border-red-500/40 transition-all flex items-center justify-between gap-3 group/item"
                     >
                       <div className="flex items-center gap-2.5 min-w-0">
-                        <div className="w-7 h-7 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-xs font-bold text-emerald-400 shrink-0">
-                          {isAdvanced ? '⭐' : '✓'}
+                        <div className="w-7 h-7 rounded-lg bg-[#090d16] border border-slate-800 flex items-center justify-center text-xs font-bold text-red-400 shrink-0">
+                          {isAdvanced ? '★' : '✓'}
                         </div>
                         <div className="min-w-0">
-                          <h5 className="text-sm font-bold text-white truncate">
+                          <h5 className="text-sm font-bold text-white uppercase tracking-tight truncate">
                             {skill.skill_name}
                           </h5>
-                          <span className="text-[10px] text-slate-400 block truncate">
+                          <span className="text-[10px] text-slate-400 block truncate font-mono">
                             {categorizeSkill(skill.skill_name)}
                           </span>
                         </div>
@@ -255,15 +251,15 @@ export const SkillIdentitySection: React.FC<SkillIdentitySectionProps> = ({
                       {/* Proficiency Indicator */}
                       <div className="flex flex-col items-end gap-1 shrink-0">
                         <span
-                          className={`text-xs font-semibold px-2.5 py-0.5 rounded-lg border capitalize ${
+                          className={`text-[10px] sm:text-xs font-semibold px-2 sm:px-2.5 py-0.5 rounded-md border font-mono uppercase ${
                             isAdvanced
-                              ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 font-bold'
+                              ? 'bg-red-500/10 text-red-300 border-red-500/30 font-bold'
                               : skill.proficiency === 'intermediate'
-                              ? 'bg-slate-800 text-emerald-300 border-slate-700'
+                              ? 'bg-slate-800 text-orange-300 border-slate-700'
                               : 'bg-slate-900 text-slate-300 border-slate-800'
                           }`}
                         >
-                          {isAdvanced ? 'Advanced (Expert)' : skill.proficiency}
+                          {isAdvanced ? 'Advanced' : skill.proficiency}
                         </span>
                         {renderProficiencyMeter(skill.proficiency)}
                       </div>
@@ -276,21 +272,21 @@ export const SkillIdentitySection: React.FC<SkillIdentitySectionProps> = ({
 
           {/* Sub-Card: Real Breakdown Stats */}
           {teachSkills.length > 0 && (
-            <div className="p-3.5 rounded-2xl bg-slate-950/40 border border-slate-800/80 text-[11px] text-slate-400 flex flex-wrap items-center justify-between gap-2">
-              <span className="font-semibold text-slate-300">Competency Breakdown:</span>
+            <div className="p-3.5 rounded-xl bg-[#030712] border border-slate-800 text-[11px] text-slate-400 flex flex-wrap items-center justify-between gap-2">
+              <span className="font-mono text-slate-400">// BREAKDOWN:</span>
               <div className="flex items-center gap-2 font-mono text-[10px]">
                 {teachCounts.advanced > 0 && (
-                  <span className="text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-lg border border-emerald-500/20">
+                  <span className="text-red-400 bg-red-500/10 px-2 py-0.5 rounded border border-red-500/20">
                     {teachCounts.advanced} Advanced
                   </span>
                 )}
                 {teachCounts.intermediate > 0 && (
-                  <span className="text-slate-300 bg-slate-800 px-2 py-0.5 rounded-lg">
+                  <span className="text-orange-400 bg-orange-500/10 px-2 py-0.5 rounded border border-orange-500/20">
                     {teachCounts.intermediate} Intermediate
                   </span>
                 )}
                 {teachCounts.beginner > 0 && (
-                  <span className="text-slate-400 bg-slate-900 px-2 py-0.5 rounded-lg">
+                  <span className="text-slate-400 bg-slate-800 px-2 py-0.5 rounded">
                     {teachCounts.beginner} Beginner
                   </span>
                 )}
@@ -302,36 +298,33 @@ export const SkillIdentitySection: React.FC<SkillIdentitySectionProps> = ({
         {/* ========================================================= */}
         {/* PILLAR 2: WANTS TO LEARN ("I want to learn these things") */}
         {/* ========================================================= */}
-        <div className="rounded-3xl bg-slate-900/80 border border-blue-500/20 p-5 sm:p-6 backdrop-blur-xl relative overflow-hidden flex flex-col justify-between space-y-5 shadow-lg shadow-black/20 group">
-          {/* Subtle Ambient Glow */}
-          <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/5 rounded-full blur-2xl pointer-events-none" />
-
+        <div className="rounded-2xl bg-[#090d16] border border-slate-800 p-5 sm:p-6 relative overflow-hidden flex flex-col justify-between space-y-5 shadow-xl group">
           <div className="space-y-4">
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3.5">
+            <div className="flex items-center justify-between border-b border-slate-800/80 pb-3.5">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 shadow-sm">
+                <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shadow-sm">
                   <Target className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-blue-400 block font-mono">
-                    Wants To Learn
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-cyan-400 block font-mono">
+                    // WANTS TO LEARN
                   </span>
-                  <h4 className="text-base sm:text-lg font-bold text-white tracking-tight">
-                    "I want to learn these things"
+                  <h4 className="text-base sm:text-lg font-black text-white uppercase tracking-tight">
+                    Learning Aspirations
                   </h4>
                 </div>
               </div>
 
-              <span className="text-xs font-mono font-bold text-blue-300 bg-blue-500/10 px-2.5 py-1 rounded-xl border border-blue-500/20">
-                {learnSkills.length} goal{learnSkills.length !== 1 ? 's' : ''}
+              <span className="text-xs font-mono font-bold text-cyan-300 bg-cyan-500/10 px-2.5 py-1 rounded-lg border border-cyan-500/20">
+                {learnSkills.length} GOAL{learnSkills.length !== 1 ? 'S' : ''}
               </span>
             </div>
 
             {/* List of Skills with Desired Goal Level */}
             {learnSkills.length === 0 ? (
-              <div className="p-8 rounded-2xl border-2 border-dashed border-slate-800 text-center space-y-1.5 text-xs text-slate-500">
-                <p className="font-semibold text-slate-400">No learning wishlist added yet.</p>
+              <div className="p-8 rounded-xl border-2 border-dashed border-slate-800 text-center space-y-1.5 text-xs text-slate-500">
+                <p className="font-semibold text-slate-400 font-mono">// NO LEARNING WISHLIST ADDED YET</p>
                 <p>Add skills you want other students to mentor you in.</p>
               </div>
             ) : (
@@ -341,17 +334,17 @@ export const SkillIdentitySection: React.FC<SkillIdentitySectionProps> = ({
                   return (
                     <div
                       key={skill.skill_name}
-                      className="p-3 sm:p-3.5 rounded-2xl bg-slate-950/70 border border-slate-800/90 hover:border-blue-500/30 transition-all flex items-center justify-between gap-3 group/item"
+                      className="p-3 sm:p-3.5 rounded-xl bg-[#030712] border border-slate-800/90 hover:border-cyan-500/40 transition-all flex items-center justify-between gap-3 group/item"
                     >
                       <div className="flex items-center gap-2.5 min-w-0">
-                        <div className="w-7 h-7 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-xs font-bold text-blue-400 shrink-0">
+                        <div className="w-7 h-7 rounded-lg bg-[#090d16] border border-slate-800 flex items-center justify-center text-xs font-bold text-cyan-400 shrink-0">
                           🎯
                         </div>
                         <div className="min-w-0">
-                          <h5 className="text-sm font-bold text-white truncate">
+                          <h5 className="text-sm font-bold text-white uppercase tracking-tight truncate">
                             {skill.skill_name}
                           </h5>
-                          <span className="text-[10px] text-slate-400 block truncate">
+                          <span className="text-[10px] text-slate-400 block truncate font-mono">
                             {categorizeSkill(skill.skill_name)}
                           </span>
                         </div>
@@ -360,15 +353,15 @@ export const SkillIdentitySection: React.FC<SkillIdentitySectionProps> = ({
                       {/* Desired Level Indicator */}
                       <div className="flex flex-col items-end gap-1 shrink-0">
                         <span
-                          className={`text-xs font-semibold px-2.5 py-0.5 rounded-lg border capitalize ${
+                          className={`text-[10px] sm:text-xs font-semibold px-2 sm:px-2.5 py-0.5 rounded-md border font-mono uppercase ${
                             isAdvanced
-                              ? 'bg-blue-500/20 text-blue-300 border-blue-500/40 font-bold'
+                              ? 'bg-cyan-500/10 text-cyan-300 border-cyan-500/30 font-bold'
                               : skill.desired_level === 'intermediate'
-                              ? 'bg-slate-800 text-blue-300 border-slate-700'
+                              ? 'bg-slate-800 text-cyan-300 border-slate-700'
                               : 'bg-slate-900 text-slate-300 border-slate-800'
                           }`}
                         >
-                          Target: {isAdvanced ? 'Mastery' : skill.desired_level}
+                          {isAdvanced ? 'Mastery' : skill.desired_level}
                         </span>
                         {renderDesiredMeter(skill.desired_level)}
                       </div>
@@ -381,21 +374,21 @@ export const SkillIdentitySection: React.FC<SkillIdentitySectionProps> = ({
 
           {/* Sub-Card: Real Breakdown Stats */}
           {learnSkills.length > 0 && (
-            <div className="p-3.5 rounded-2xl bg-slate-950/40 border border-slate-800/80 text-[11px] text-slate-400 flex flex-wrap items-center justify-between gap-2">
-              <span className="font-semibold text-slate-300">Aspiration Targets:</span>
+            <div className="p-3.5 rounded-xl bg-[#030712] border border-slate-800 text-[11px] text-slate-400 flex flex-wrap items-center justify-between gap-2">
+              <span className="font-mono text-slate-400">// TARGETS:</span>
               <div className="flex items-center gap-2 font-mono text-[10px]">
                 {learnCounts.advanced > 0 && (
-                  <span className="text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-lg border border-blue-500/20">
-                    {learnCounts.advanced} Mastery Target
+                  <span className="text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">
+                    {learnCounts.advanced} Mastery
                   </span>
                 )}
                 {learnCounts.intermediate > 0 && (
-                  <span className="text-slate-300 bg-slate-800 px-2 py-0.5 rounded-lg">
-                    {learnCounts.intermediate} Project Target
+                  <span className="text-slate-300 bg-slate-800 px-2 py-0.5 rounded">
+                    {learnCounts.intermediate} Project
                   </span>
                 )}
                 {learnCounts.beginner > 0 && (
-                  <span className="text-slate-400 bg-slate-900 px-2 py-0.5 rounded-lg">
+                  <span className="text-slate-400 bg-slate-900 px-2 py-0.5 rounded">
                     {learnCounts.beginner} Foundations
                   </span>
                 )}
@@ -409,14 +402,14 @@ export const SkillIdentitySection: React.FC<SkillIdentitySectionProps> = ({
       {/* 3. LIGHTWEIGHT VISUAL RELATIONSHIP & EXCHANGE BRIDGE */}
       {/* ========================================================= */}
       {(teachSkills.length > 0 || learnSkills.length > 0) && (
-        <div className="rounded-3xl bg-slate-900/60 border border-slate-800 p-5 sm:p-6 backdrop-blur-xl space-y-4">
+        <div className="rounded-2xl bg-[#090d16] border border-slate-800 p-5 sm:p-6 space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 font-bold text-xs">
+              <div className="w-8 h-8 rounded-lg bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-400 font-bold text-xs">
                 ⇄
               </div>
               <div>
-                <h4 className="text-sm font-bold text-white tracking-tight">
+                <h4 className="text-sm font-black text-white uppercase tracking-tight">
                   Skill Exchange Synergy & Direction
                 </h4>
                 <p className="text-xs text-slate-400">
@@ -426,9 +419,9 @@ export const SkillIdentitySection: React.FC<SkillIdentitySectionProps> = ({
             </div>
 
             {/* Truthful Exchange Status */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-xl bg-slate-950 border border-slate-800 text-xs">
-              <span className="text-slate-400">Exchange Profile:</span>
-              <span className="text-emerald-400 font-bold">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-[#030712] border border-slate-800 text-xs font-mono">
+              <span className="text-slate-400">EXCHANGE RATIO:</span>
+              <span className="text-amber-400 font-bold uppercase">
                 {totalOffered > totalSought
                   ? 'Mentor Focused'
                   : totalSought > totalOffered
@@ -441,21 +434,21 @@ export const SkillIdentitySection: React.FC<SkillIdentitySectionProps> = ({
           {/* Visual Ratio Bar */}
           <div className="space-y-1.5 pt-1">
             <div className="flex items-center justify-between text-[11px] font-mono text-slate-400">
-              <span className="text-emerald-400 font-semibold flex items-center gap-1">
+              <span className="text-red-400 font-bold flex items-center gap-1">
                 <span>● Teaching Capacity</span> ({totalOffered})
               </span>
-              <span className="text-blue-400 font-semibold flex items-center gap-1">
+              <span className="text-cyan-400 font-bold flex items-center gap-1">
                 ({totalSought}) <span>Learning Demand ●</span>
               </span>
             </div>
 
-            <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden flex">
+            <div className="h-2 w-full bg-slate-900 rounded-full overflow-hidden flex border border-slate-800">
               <div
-                className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 transition-all duration-500"
+                className="h-full bg-gradient-to-r from-red-500 to-orange-400 transition-all duration-500"
                 style={{ width: `${teachRatio}%` }}
               />
               <div
-                className="h-full bg-gradient-to-r from-blue-500 to-indigo-500 transition-all duration-500"
+                className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-500"
                 style={{ width: `${100 - teachRatio}%` }}
               />
             </div>
@@ -463,15 +456,15 @@ export const SkillIdentitySection: React.FC<SkillIdentitySectionProps> = ({
 
           {/* Domain Transition Matrix (Real Data) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
-            <div className="p-3.5 rounded-2xl bg-slate-950/50 border border-slate-800/80 space-y-1.5">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 font-mono">
-                Domains You Can Mentor
+            <div className="p-3.5 rounded-xl bg-[#030712] border border-slate-800 space-y-1.5">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-red-400 font-mono">
+                // DOMAINS YOU CAN MENTOR
               </span>
               <div className="flex flex-wrap gap-1.5 pt-0.5">
                 {teachDomains.map((domain) => (
                   <span
                     key={domain}
-                    className="text-xs px-2.5 py-0.5 rounded-lg bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 font-medium"
+                    className="text-xs px-2.5 py-0.5 rounded-md bg-red-500/10 text-red-300 border border-red-500/20 font-mono"
                   >
                     {domain}
                   </span>
@@ -479,15 +472,15 @@ export const SkillIdentitySection: React.FC<SkillIdentitySectionProps> = ({
               </div>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-slate-950/50 border border-slate-800/80 space-y-1.5">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-blue-400 font-mono">
-                Domains You Seek
+            <div className="p-3.5 rounded-xl bg-[#030712] border border-slate-800 space-y-1.5">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-cyan-400 font-mono">
+                // DOMAINS YOU SEEK
               </span>
               <div className="flex flex-wrap gap-1.5 pt-0.5">
                 {learnDomains.map((domain) => (
                   <span
                     key={domain}
-                    className="text-xs px-2.5 py-0.5 rounded-lg bg-blue-500/10 text-blue-300 border border-blue-500/20 font-medium"
+                    className="text-xs px-2.5 py-0.5 rounded-md bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 font-mono"
                   >
                     {domain}
                   </span>
@@ -497,10 +490,10 @@ export const SkillIdentitySection: React.FC<SkillIdentitySectionProps> = ({
           </div>
 
           {/* Hackathon Presentation Note */}
-          <div className="flex items-center gap-2 pt-1 text-[11px] text-slate-500">
-            <CheckCircle className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+          <div className="flex items-center gap-2 pt-1 text-[11px] text-slate-500 font-mono">
+            <CheckCircle className="w-3.5 h-3.5 text-red-400 shrink-0" />
             <span>
-              All competencies reflect direct verified student calibration. Zero synthetic or fabricated AI scores.
+              Direct student-verified calibration. Zero synthetic or fabricated AI scores.
             </span>
           </div>
         </div>

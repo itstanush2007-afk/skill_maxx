@@ -176,12 +176,12 @@ export const SkillSelector: React.FC<SkillSelectorProps> = ({
   // Config colors according to mode
   const theme = isTeachMode
     ? {
-        badge: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-        activePill: 'bg-emerald-500 text-black font-semibold shadow-emerald-500/20',
-        ring: 'focus:border-emerald-500/60 focus:ring-emerald-500/10',
-        accentText: 'text-emerald-400',
-        borderAccent: 'border-emerald-500/30',
-        glow: 'from-emerald-500/10 to-transparent',
+        badge: 'bg-purple-500/10 text-purple-300 border-purple-500/20',
+        activePill: 'bg-[#7B57FF] hover:bg-[#6D44FF] text-white font-semibold shadow-sm shadow-purple-500/20',
+        ring: 'focus:border-[#7B57FF] focus:ring-purple-500/20',
+        accentText: 'text-purple-300',
+        borderAccent: 'border-purple-500/30',
+        glow: 'from-purple-500/10 to-transparent',
         levelLabel: 'Proficiency Level',
         descriptions: {
           beginner: 'Can teach fundamentals & guide basics',
@@ -190,12 +190,12 @@ export const SkillSelector: React.FC<SkillSelectorProps> = ({
         },
       }
     : {
-        badge: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-        activePill: 'bg-blue-500 text-white font-semibold shadow-blue-500/20',
-        ring: 'focus:border-blue-500/60 focus:ring-blue-500/10',
-        accentText: 'text-blue-400',
-        borderAccent: 'border-blue-500/30',
-        glow: 'from-blue-500/10 to-transparent',
+        badge: 'bg-indigo-500/10 text-indigo-300 border-indigo-500/20',
+        activePill: 'bg-[#7B57FF] hover:bg-[#6D44FF] text-white font-semibold shadow-sm shadow-purple-500/20',
+        ring: 'focus:border-[#7B57FF] focus:ring-purple-500/20',
+        accentText: 'text-indigo-300',
+        borderAccent: 'border-indigo-500/30',
+        glow: 'from-indigo-500/10 to-transparent',
         levelLabel: 'Desired Goal Level',
         descriptions: {
           beginner: 'Want to learn foundations & syntax',
@@ -268,20 +268,23 @@ export const SkillSelector: React.FC<SkillSelectorProps> = ({
       {/* 1. Header Info Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
+          <div className="text-[10px] font-mono text-slate-400 font-bold uppercase tracking-wider mb-1">
+            // {isTeachMode ? 'MENTORSHIP SUPERPOWER' : 'LEARNING GOAL'}
+          </div>
           <div className="flex items-center gap-2">
-            <h3 className="text-lg font-bold text-white tracking-tight">
+            <h3 className="text-lg font-black uppercase text-white tracking-tight">
               {isTeachMode ? 'What can you teach or mentor in?' : 'What do you want to learn?'}
             </h3>
             <span
-              className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${theme.badge}`}
+              className={`text-[10px] font-bold uppercase font-mono tracking-wider px-2 py-0.5 rounded-full border ${theme.badge}`}
             >
-              {isTeachMode ? 'Mentorship Superpower' : 'Learning Goal'}
+              {isTeachMode ? 'CAPACITY' : 'ASPIRATION'}
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-400 mt-1 font-mono">
             {isTeachMode
-              ? 'Select skills you are confident explaining to peers.'
-              : 'Choose topics you want matched study partners for.'}
+              ? '// SELECT COMPETENCIES YOU ARE READY TO GUIDE PEERS IN'
+              : '// CHOOSE TOPICS YOU WANT COMPLEMENTARY PEER MATCHES FOR'}
           </p>
         </div>
 
@@ -424,23 +427,23 @@ export const SkillSelector: React.FC<SkillSelectorProps> = ({
       </div>
 
       {/* 3. Curated Popular Skills & Category Filter */}
-      <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/40 border border-slate-800/80 space-y-3">
+      <div className="p-4 sm:p-5 rounded-2xl bg-[#090d16] border border-slate-800 space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span>Suggested Campus Skills</span>
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
+            <span>// MASTER CATALOG • SUGGESTED COMPETENCIES</span>
           </span>
 
           {/* Category Chips */}
-          <div className="flex items-center gap-1 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+          <div className="flex items-center gap-1 overflow-x-auto pb-1 sm:pb-0 scrollbar-none font-mono">
             {CATEGORIES.map((cat) => (
               <button
                 key={cat.id}
                 type="button"
                 onClick={() => setActiveCategory(cat.id)}
-                className={`text-[11px] px-2.5 py-1 rounded-lg transition-all shrink-0 select-none ${
+                className={`text-[10px] uppercase px-2.5 py-1 rounded-lg transition-all shrink-0 select-none ${
                   activeCategory === cat.id
-                    ? 'bg-slate-800 text-white font-medium border border-slate-700'
+                    ? 'bg-slate-800 text-amber-400 font-bold border border-slate-700'
                     : 'text-slate-400 hover:text-slate-200'
                 }`}
               >
@@ -468,12 +471,12 @@ export const SkillSelector: React.FC<SkillSelectorProps> = ({
                 className={`group text-xs px-3.5 py-2 rounded-xl border transition-all duration-150 flex items-center gap-2 select-none active:scale-95 ${
                   added
                     ? `${theme.badge} ring-1 ring-inset ${theme.borderAccent} font-semibold shadow-sm`
-                    : 'bg-slate-900/80 hover:bg-slate-800 text-slate-300 border-slate-800 hover:border-slate-700 hover:text-white'
+                    : 'bg-slate-900 hover:bg-slate-800 text-slate-300 border-slate-800 hover:border-slate-700 hover:text-white'
                 }`}
               >
                 <span
                   className={`w-4 h-4 rounded-md flex items-center justify-center text-[10px] font-bold shrink-0 transition-colors ${
-                    added ? 'bg-emerald-500 text-black' : 'bg-slate-800 text-slate-400 group-hover:text-slate-200'
+                    added ? 'bg-amber-400 text-black' : 'bg-slate-800 text-slate-400 group-hover:text-slate-200'
                   }`}
                 >
                   {added ? <Check className="w-3 h-3 stroke-[3]" /> : '+'}
@@ -518,15 +521,15 @@ export const SkillSelector: React.FC<SkillSelectorProps> = ({
             {selectedSkills.map((item) => (
               <div
                 key={item.skill_name}
-                className="p-3.5 sm:p-4 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-slate-700/80 transition-all flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-sm group"
+                className="p-3.5 sm:p-4 rounded-xl bg-[#030712] border border-slate-800 hover:border-slate-700/80 transition-all flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-sm group"
               >
                 {/* Skill Name & Mode Marker */}
                 <div className="flex items-center gap-3 min-w-0">
                   <div
                     className={`w-9 h-9 rounded-xl flex items-center justify-center text-xs font-black shrink-0 border ${
                       isTeachMode
-                        ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                        : 'bg-blue-500/10 text-blue-400 border-blue-500/20'
+                        ? 'bg-red-500/10 text-red-400 border-red-500/20'
+                        : 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20'
                     }`}
                   >
                     {isTeachMode ? '⚡' : '🎯'}
@@ -548,7 +551,7 @@ export const SkillSelector: React.FC<SkillSelectorProps> = ({
                 </div>
 
                 {/* Level Segmented Switch & Remove */}
-                <div className="flex items-center gap-2 justify-between md:justify-end self-stretch md:self-auto pt-2 md:pt-0 border-t md:border-t-0 border-slate-800/80">
+                <div className="flex items-center gap-1.5 sm:gap-2 justify-between md:justify-end self-stretch md:self-auto pt-2 md:pt-0 border-t md:border-t-0 border-slate-800/80 min-w-0">
                   {/* Segmented Controller */}
                   <div className="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800/90">
                     {(['beginner', 'intermediate', 'advanced'] as SkillLevel[]).map((lvl) => (
@@ -556,9 +559,9 @@ export const SkillSelector: React.FC<SkillSelectorProps> = ({
                         key={lvl}
                         type="button"
                         onClick={() => handleLevelChange(item.skill_name, lvl)}
-                        className={`text-xs px-3 py-1.5 rounded-lg transition-all duration-150 capitalize font-medium select-none ${
+                        className={`text-[10px] sm:text-xs px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg transition-all duration-150 capitalize font-medium select-none ${
                           item.level === lvl
-                            ? `${theme.activePill} text-xs font-semibold shadow-sm`
+                            ? `${theme.activePill} text-[10px] sm:text-xs font-semibold shadow-sm`
                             : 'text-slate-400 hover:text-slate-200'
                         }`}
                         title={theme.descriptions[lvl]}

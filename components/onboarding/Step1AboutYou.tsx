@@ -62,20 +62,23 @@ export const Step1AboutYou: React.FC<Step1Props> = ({
   return (
     <div className="space-y-6 animate-fadeIn">
       <div>
-        <h2 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
+        <div className="text-[11px] font-mono text-red-400 font-bold tracking-wider uppercase mb-1">
+          // STEP 01 • IDENTITY & ACADEMICS
+        </div>
+        <h2 className="text-xl sm:text-2xl font-black uppercase text-white tracking-tight flex items-center justify-between">
           <span>Personal Details</span>
-          <span className="text-xs font-normal text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
-            Step 1
+          <span className="text-[10px] font-mono font-bold text-amber-400 bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/20">
+            PHASE 01
           </span>
         </h2>
-        <p className="text-sm text-slate-400 mt-1">
-          Tell other students who you are, your academic focus, and what drives you.
+        <p className="text-xs text-slate-400 mt-1 font-mono">
+          // ACADEMIC FOCUS, NAME CALIBRATION & STUDENT AVATAR
         </p>
       </div>
 
       {/* Avatar Selection Section */}
-      <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-3">
-        <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300">
+      <div className="p-4 rounded-2xl bg-[#090d16] border border-slate-800 space-y-3">
+        <label className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-300">
           Profile Avatar
         </label>
         <div className="flex flex-col sm:flex-row items-center gap-4">
@@ -93,7 +96,7 @@ export const Step1AboutYou: React.FC<Step1Props> = ({
                   onClick={() => onChange({ avatarUrl: url })}
                   className={`w-9 h-9 rounded-xl overflow-hidden border-2 transition-all p-0.5 bg-slate-800 ${
                     avatarUrl === url
-                      ? 'border-emerald-400 ring-2 ring-emerald-500/30 scale-105'
+                      ? 'border-red-500 ring-2 ring-red-500/30 scale-105'
                       : 'border-slate-700 hover:border-slate-500 opacity-70 hover:opacity-100'
                   }`}
                 >
@@ -109,7 +112,7 @@ export const Step1AboutYou: React.FC<Step1Props> = ({
                     )}`,
                   })
                 }
-                className="text-xs text-emerald-400 hover:text-emerald-300 bg-slate-800 px-2.5 py-1.5 rounded-xl border border-slate-700 flex items-center gap-1 transition-colors"
+                className="text-xs text-red-400 hover:text-red-300 bg-[#030712] px-2.5 py-1.5 rounded-xl border border-slate-700 flex items-center gap-1 transition-colors font-mono"
               >
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>Randomize</span>

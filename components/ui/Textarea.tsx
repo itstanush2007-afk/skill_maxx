@@ -26,13 +26,13 @@ export const Textarea: React.FC<TextareaProps> = ({
         {label && (
           <label
             htmlFor={textareaId}
-            className="block text-xs font-semibold uppercase tracking-wider text-slate-300"
+            className="block text-xs font-mono font-semibold uppercase tracking-wider text-slate-300"
           >
-            {label} {props.required && <span className="text-emerald-400">*</span>}
+            {label} {props.required && <span className="text-red-400">*</span>}
           </label>
         )}
         {maxLength && (
-          <span className="text-xs text-slate-500">
+          <span className="text-xs font-mono text-slate-500">
             {currentLength}/{maxLength}
           </span>
         )}
@@ -41,11 +41,11 @@ export const Textarea: React.FC<TextareaProps> = ({
         id={textareaId}
         value={value}
         maxLength={maxLength}
-        className={`w-full rounded-xl bg-slate-900/80 border ${
+        className={`w-full rounded-xl bg-[#030712] border ${
           error
             ? 'border-red-500/80 focus:border-red-500 focus:ring-red-500/20'
-            : 'border-slate-800 focus:border-emerald-500 focus:ring-emerald-500/20'
-        } px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 transition-all focus:outline-none focus:ring-2 resize-none ${className}`}
+            : 'border-slate-800 focus:border-red-500 focus:ring-red-500/20'
+        } px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 transition-all focus:outline-none focus:ring-2 font-mono resize-none ${className}`}
         {...props}
       />
       {error ? (

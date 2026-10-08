@@ -1,4 +1,4 @@
-import { supabase } from './client';
+import { supabase, isSupabaseConfigured } from './client';
 import {
   CompleteUserProfile,
   MatchingProfileData,
@@ -42,6 +42,12 @@ export async function getCompleteProfile(
   userId: string
 ): Promise<{ data: CompleteUserProfile | null; error: Error | null; isLocalFallback?: boolean }> {
   try {
+    // If Supabase credentials are missing or placeholder, directly use local storage
+    if (!isSupabaseConfigured()) {
+      const localCached = getLocalProfileBackup();
+      return { data: localCached, error: null, isLocalFallback: true };
+    }
+
     // 1. Fetch core profile from Supabase
     const { data: profileData, error: profileError } = await supabase
       .from('profiles')
@@ -50,12 +56,7 @@ export async function getCompleteProfile(
       .single();
 
     if (profileError) {
-      if (profileError.code === 'PGRST116') {
-        // Record not found in Supabase
-        return { data: null, error: null };
-      }
-
-      // If network failure or credentials missing, attempt local storage recovery
+      // Check local storage backup first if Supabase doesn't have the record or errored
       const localCached = getLocalProfileBackup();
       if (
         localCached &&
@@ -64,6 +65,11 @@ export async function getCompleteProfile(
           !localCached.user_id)
       ) {
         return { data: localCached, error: null, isLocalFallback: true };
+      }
+
+      if (profileError.code === 'PGRST116') {
+        // Record not found in Supabase and no local backup
+        return { data: null, error: null };
       }
 
       return { data: null, error: new Error(profileError.message) };
@@ -134,11 +140,24 @@ export async function getCurrentUserProfile(): Promise<{
   error: Error | null;
 }> {
   const user = await getAuthenticatedUser();
+  if (user?.id) {
+    const { data, error } = await getCompleteProfile(user.id);
+    return { data, userId: user.id, error };
+  }
+
+  // Guest / local mode: check local profile cache first
+  if (typeof window !== 'undefined') {
+    const localProfile = getLocalProfileBackup();
+    if (localProfile) {
+      const guestId = localStorage.getItem(LOCAL_STORAGE_GUEST_ID_KEY) || localProfile.user_id;
+      return { data: localProfile, userId: guestId, error: null };
+    }
+  }
+
   const resolvedId =
-    user?.id ||
-    (typeof window !== 'undefined'
+    typeof window !== 'undefined'
       ? localStorage.getItem(LOCAL_STORAGE_GUEST_ID_KEY) || '11111111-1111-1111-1111-111111111111'
-      : '11111111-1111-1111-1111-111111111111');
+      : '11111111-1111-1111-1111-111111111111';
 
   const { data, error } = await getCompleteProfile(resolvedId);
   return { data, userId: resolvedId, error };
@@ -164,6 +183,11 @@ export async function saveProfile(
       localStorage.setItem(LOCAL_STORAGE_PROFILE_KEY, JSON.stringify(payload));
       localStorage.setItem('skillmaxx_is_onboarded', 'true');
       localStorage.setItem(LOCAL_STORAGE_GUEST_ID_KEY, targetUserId);
+    }
+
+    // If Supabase is not configured with real credentials, save locally and succeed cleanly
+    if (!isSupabaseConfigured()) {
+      return { success: true, error: null, savedLocally: true };
     }
 
     // 2. Upsert into Supabase profiles table

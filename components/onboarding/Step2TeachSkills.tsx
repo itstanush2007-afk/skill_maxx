@@ -33,14 +33,17 @@ export const Step2TeachSkills: React.FC<Step2Props> = ({
   return (
     <div className="space-y-6 animate-fadeIn">
       <div>
-        <h2 className="text-xl font-bold text-white tracking-tight flex items-center gap-2">
+        <div className="text-[11px] font-mono text-red-400 font-bold tracking-wider uppercase mb-1">
+          // STEP 02 • MENTORSHIP SUPERPOWER
+        </div>
+        <h2 className="text-xl sm:text-2xl font-black uppercase text-white tracking-tight flex items-center justify-between">
           <span>Skills I Can Teach</span>
-          <span className="text-xs font-normal text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">
-            Step 2
+          <span className="text-[10px] font-mono font-bold text-amber-400 bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/20">
+            PHASE 02
           </span>
         </h2>
-        <p className="text-sm text-slate-400 mt-1">
-          Share your superpowers! Add the technical or creative skills you can mentor other students in.
+        <p className="text-xs text-slate-400 mt-1 font-mono">
+          // DEFINE TECHNICAL OR CREATIVE COMPETENCIES OFFERED TO CAMPUS PEERS
         </p>
       </div>
 

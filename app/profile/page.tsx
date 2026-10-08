@@ -32,7 +32,32 @@ export default function ProfilePage() {
 
   useEffect(() => {
     async function load() {
-      setLoading(true);
+      // Instant local storage hydration for zero-flicker rendering
+      try {
+        const local = typeof window !== 'undefined' ? localStorage.getItem('skillmaxx_user_profile') : null;
+        if (local) {
+          const parsed = JSON.parse(local);
+          if (parsed.full_name) {
+            setProfile({
+              id: parsed.user_id || '11111111-1111-1111-1111-111111111111',
+              user_id: parsed.user_id || '11111111-1111-1111-1111-111111111111',
+              full_name: parsed.full_name,
+              department: parsed.department,
+              year: parsed.year,
+              bio: parsed.bio,
+              avatar_url: parsed.avatar_url,
+              availability: parsed.availability || { preferred_days: [], preferred_time: '', mode: 'hybrid' },
+              is_onboarded: true,
+              teach_skills: parsed.teach_skills || [],
+              learn_skills: parsed.learn_skills || [],
+            });
+            setLoading(false);
+          }
+        }
+      } catch (e) {
+        console.error(e);
+      }
+
       const { data } = await getCurrentUserProfile();
       if (data) {
         setProfile(data);
@@ -86,7 +111,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#090d16] bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(16,185,129,0.1),rgba(255,255,255,0))]">
+    <div className="min-h-screen flex flex-col bg-[#030712]">
       <Navbar
         userName={profile.full_name}
         avatarUrl={profile.avatar_url}
@@ -95,23 +120,23 @@ export default function ProfilePage() {
 
       <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         {/* Navigation & Header Actions Bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-800/80">
-          <div className="flex items-center gap-2 text-xs text-slate-400">
-            <Link href="/dashboard" className="hover:text-white transition-colors">
-              Dashboard
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-800/80 font-mono text-xs">
+          <div className="flex items-center gap-2 text-slate-400">
+            <Link href="/dashboard" className="hover:text-red-400 transition-colors">
+              // DASHBOARD
             </Link>
             <span>/</span>
-            <span className="text-white font-medium">Campus Skill Passport</span>
+            <span className="text-white font-bold">// CAMPUS SKILL PASSPORT</span>
           </div>
 
           {/* 3 Core Action Buttons */}
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 font-mono">
             <Link href="/onboarding?step=2">
               <Button
                 variant="outline"
                 size="sm"
-                icon={<Plus className="w-3.5 h-3.5 text-emerald-400" />}
-                className="border-slate-800 hover:border-emerald-500/40"
+                icon={<Plus className="w-3.5 h-3.5 text-red-400" />}
+                className="bg-[#090d16] border-slate-800 hover:border-red-500/40 text-slate-300 text-xs uppercase"
               >
                 <span>Add Skill</span>
               </Button>
@@ -121,10 +146,10 @@ export default function ProfilePage() {
               <Button
                 variant="outline"
                 size="sm"
-                icon={<Calendar className="w-3.5 h-3.5 text-blue-400" />}
-                className="border-slate-800 hover:border-blue-500/40"
+                icon={<Calendar className="w-3.5 h-3.5 text-cyan-400" />}
+                className="bg-[#090d16] border-slate-800 hover:border-cyan-500/40 text-slate-300 text-xs uppercase"
               >
-                <span>Update Availability</span>
+                <span>Update Schedule</span>
               </Button>
             </Link>
 
@@ -133,7 +158,7 @@ export default function ProfilePage() {
                 variant="primary"
                 size="sm"
                 icon={<Edit3 className="w-3.5 h-3.5" />}
-                className="bg-emerald-400 hover:bg-emerald-300 text-black font-bold"
+                className="bg-[#7B57FF] hover:bg-[#6D44FF] text-white font-semibold text-xs border-0 shadow-sm shadow-purple-500/20 active:scale-[0.98] rounded-xl px-4 py-2"
               >
                 <span>Edit Profile</span>
               </Button>
@@ -143,7 +168,7 @@ export default function ProfilePage() {
               variant="outline"
               size="sm"
               icon={<LogOut className="w-3.5 h-3.5 text-slate-400" />}
-              className="border-slate-800 hover:border-red-500/40 hover:text-red-300"
+              className="bg-[#090d16] border-slate-800 hover:border-purple-500/40 hover:text-purple-300 text-slate-300 text-xs rounded-xl"
               onClick={async () => {
                 await signOutUser();
                 window.location.href = '/onboarding';
@@ -157,47 +182,43 @@ export default function ProfilePage() {
         {/* ========================================================================= */}
         {/* THE "SKILL IDENTITY CARD" (10-Second Instant Recognition Hero)             */}
         {/* ========================================================================= */}
-        <div className="relative rounded-3xl bg-gradient-to-b from-slate-900 via-slate-900/95 to-[#0b101c] border border-slate-800 p-6 sm:p-8 backdrop-blur-2xl shadow-2xl shadow-black/80 space-y-6 overflow-hidden">
-          {/* Subtle Ambient Card Lighting */}
-          <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
-
+        <div className="relative rounded-2xl bg-[#090d16] border border-purple-500/30 p-6 sm:p-8 shadow-2xl shadow-purple-500/5 space-y-6 overflow-hidden">
           {/* Top Card Badge Bar */}
           <div className="relative flex items-center justify-between pb-4 border-b border-slate-800/80 text-[11px] font-mono">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-slate-400 uppercase tracking-widest font-bold">
-                SkillMaxx Student Identity Card
+              <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+              <span className="text-purple-300 uppercase tracking-widest font-bold">
+                // SKILLMAX STUDENT IDENTITY PASSPORT
               </span>
             </div>
             <span className="text-slate-500 hidden sm:inline-block">
-              Campus ID #{profile.user_id ? profile.user_id.slice(0, 8).toUpperCase() : 'VERIFIED'}
+              CAMPUS ID #{profile.user_id ? profile.user_id.slice(0, 8).toUpperCase() : 'VERIFIED'}
             </span>
           </div>
 
           {/* Profile Header */}
           <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div className="flex items-start sm:items-center gap-5">
+            <div className="flex items-start sm:items-center gap-4 sm:gap-5 min-w-0">
               <Avatar
                 src={profile.avatar_url}
                 name={profile.full_name}
                 size="xl"
-                className="ring-4 ring-emerald-500/20 shadow-lg shadow-black/50"
+                className="ring-2 ring-purple-500/40 shadow-lg shadow-black/50 shrink-0"
               />
-              <div className="space-y-1.5">
+              <div className="space-y-1.5 min-w-0">
                 <div className="flex flex-wrap items-center gap-2.5">
-                  <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+                  <h1 className="text-xl sm:text-3xl font-black text-white uppercase tracking-tight break-words">
                     {profile.full_name}
                   </h1>
-                  <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-mono">
-                    <CheckCircle2 className="w-3 h-3" />
+                  <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2.5 py-0.5 rounded font-mono shrink-0 uppercase">
+                    <CheckCircle2 className="w-3 h-3 text-amber-400" />
                     <span>Verified Peer</span>
                   </span>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-slate-400">
+                <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-slate-400 font-mono">
                   <span className="flex items-center gap-1.5 font-medium text-slate-200">
-                    <GraduationCap className="w-4 h-4 text-emerald-400" />
+                    <GraduationCap className="w-4 h-4 text-red-400" />
                     <span>{profile.department}</span>
                   </span>
                   <span>•</span>
@@ -207,13 +228,13 @@ export default function ProfilePage() {
             </div>
 
             {/* Availability Mode Badge */}
-            <div className="self-start md:self-auto flex items-center gap-2 p-3 rounded-2xl bg-slate-950/70 border border-slate-800 text-xs">
-              <span className="text-slate-400">Meeting Mode:</span>
-              <span className="px-2.5 py-1 rounded-xl bg-slate-900 border border-slate-700 text-white font-bold capitalize flex items-center gap-1.5">
+            <div className="self-start md:self-auto flex items-center gap-2 p-3 rounded-xl bg-[#030712] border border-slate-800 text-xs font-mono">
+              <span className="text-slate-400 uppercase">// MODE:</span>
+              <span className="px-2.5 py-1 rounded-lg bg-[#090d16] border border-slate-700 text-white font-bold uppercase flex items-center gap-1.5">
                 {profile.availability?.mode === 'online' ? (
-                  <Globe className="w-3.5 h-3.5 text-blue-400" />
+                  <Globe className="w-3.5 h-3.5 text-cyan-400" />
                 ) : profile.availability?.mode === 'in-person' ? (
-                  <MapPin className="w-3.5 h-3.5 text-emerald-400" />
+                  <MapPin className="w-3.5 h-3.5 text-red-400" />
                 ) : (
                   <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                 )}
@@ -224,7 +245,7 @@ export default function ProfilePage() {
 
           {/* Bio Quote */}
           {profile.bio && (
-            <div className="relative p-4 rounded-2xl bg-slate-950/60 border border-slate-800/80 text-sm text-slate-300 italic leading-relaxed">
+            <div className="relative p-4 rounded-xl bg-[#030712] border border-slate-800 text-sm text-slate-300 italic leading-relaxed font-mono">
               "{profile.bio}"
             </div>
           )}
@@ -232,19 +253,19 @@ export default function ProfilePage() {
           {/* 10-Second Quick Glance: Two Skills Columns */}
           <div className="relative grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
             {/* CAN TEACH */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-slate-950/60 border border-emerald-500/20 space-y-3">
+            <div className="p-4 sm:p-5 rounded-xl bg-[#030712] border border-slate-800 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-red-400 flex items-center gap-1.5">
                   <Zap className="w-3.5 h-3.5" />
-                  <span>Skills I Can Teach</span>
+                  <span>// SKILLS I CAN TEACH</span>
                 </span>
-                <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
-                  {profile.teach_skills?.length || 0} skills
+                <span className="text-[10px] font-mono text-red-400 bg-red-500/10 px-2 py-0.5 rounded border border-red-500/20">
+                  {profile.teach_skills?.length || 0} SKILLS
                 </span>
               </div>
 
               {(!profile.teach_skills || profile.teach_skills.length === 0) ? (
-                <p className="text-xs text-slate-500 italic">No teaching skills listed.</p>
+                <p className="text-xs text-slate-500 italic font-mono">// No teaching skills listed.</p>
               ) : (
                 <div className="flex flex-wrap gap-2">
                   {profile.teach_skills.map((s) => {
@@ -252,16 +273,16 @@ export default function ProfilePage() {
                     return (
                       <span
                         key={s.skill_name}
-                        className={`inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-xl border font-medium ${
+                        className={`inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border font-mono ${
                           isAdvanced
-                            ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 font-bold'
+                            ? 'bg-red-500/10 text-red-300 border-red-500/30 font-bold'
                             : s.proficiency === 'intermediate'
-                            ? 'bg-slate-900 text-emerald-300 border-slate-700'
-                            : 'bg-slate-900/90 text-slate-300 border-slate-800'
+                            ? 'bg-slate-900 text-orange-300 border-slate-800'
+                            : 'bg-[#090d16] text-slate-300 border-slate-800'
                         }`}
                       >
                         <span>{s.skill_name}</span>
-                        <span className="opacity-75 text-[10px] font-mono capitalize">
+                        <span className="opacity-75 text-[10px] font-mono uppercase">
                           ({isAdvanced ? 'Expert' : s.proficiency})
                         </span>
                       </span>
@@ -272,19 +293,19 @@ export default function ProfilePage() {
             </div>
 
             {/* WANTS TO LEARN */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-slate-950/60 border border-blue-500/20 space-y-3">
+            <div className="p-4 sm:p-5 rounded-xl bg-[#030712] border border-slate-800 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-blue-400 flex items-center gap-1.5">
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-cyan-400 flex items-center gap-1.5">
                   <Sparkles className="w-3.5 h-3.5" />
-                  <span>Skills I Want to Learn</span>
+                  <span>// SKILLS I WANT TO LEARN</span>
                 </span>
-                <span className="text-[10px] font-mono text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-full border border-blue-500/20">
-                  {profile.learn_skills?.length || 0} goals
+                <span className="text-[10px] font-mono text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">
+                  {profile.learn_skills?.length || 0} GOALS
                 </span>
               </div>
 
               {(!profile.learn_skills || profile.learn_skills.length === 0) ? (
-                <p className="text-xs text-slate-500 italic">No learning skills listed.</p>
+                <p className="text-xs text-slate-500 italic font-mono">// No learning skills listed.</p>
               ) : (
                 <div className="flex flex-wrap gap-2">
                   {profile.learn_skills.map((s) => {
@@ -292,16 +313,16 @@ export default function ProfilePage() {
                     return (
                       <span
                         key={s.skill_name}
-                        className={`inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-xl border font-medium ${
+                        className={`inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg border font-mono ${
                           isAdvanced
-                            ? 'bg-blue-500/20 text-blue-300 border-blue-500/40 font-bold'
+                            ? 'bg-cyan-500/10 text-cyan-300 border-cyan-500/30 font-bold'
                             : s.desired_level === 'intermediate'
-                            ? 'bg-slate-900 text-blue-300 border-slate-700'
-                            : 'bg-slate-900/90 text-slate-300 border-slate-800'
+                            ? 'bg-slate-900 text-cyan-300 border-slate-800'
+                            : 'bg-[#090d16] text-slate-300 border-slate-800'
                         }`}
                       >
                         <span>{s.skill_name}</span>
-                        <span className="opacity-75 text-[10px] font-mono capitalize">
+                        <span className="opacity-75 text-[10px] font-mono uppercase">
                           ({isAdvanced ? 'Mastery' : s.desired_level})
                         </span>
                       </span>
@@ -313,20 +334,20 @@ export default function ProfilePage() {
           </div>
 
           {/* Availability Footer */}
-          <div className="relative p-4 rounded-2xl bg-slate-950/50 border border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+          <div className="relative p-4 rounded-xl bg-[#030712] border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono">
             <div className="flex items-center gap-2 text-slate-300">
-              <Calendar className="w-4 h-4 text-emerald-400 shrink-0" />
+              <Calendar className="w-4 h-4 text-red-400 shrink-0" />
               <span>
-                <strong className="text-white">Active Days:</strong>{' '}
+                <strong className="text-white uppercase">// ACTIVE DAYS:</strong>{' '}
                 {profile.availability?.preferred_days?.length > 0
                   ? profile.availability.preferred_days.join(', ')
                   : 'Flexible'}
               </span>
             </div>
             <div className="flex items-center gap-2 text-slate-300">
-              <Clock className="w-4 h-4 text-emerald-400 shrink-0" />
+              <Clock className="w-4 h-4 text-cyan-400 shrink-0" />
               <span>
-                <strong className="text-white">Preferred Slot:</strong>{' '}
+                <strong className="text-white uppercase">// PREFERRED SLOT:</strong>{' '}
                 {profile.availability?.preferred_time || 'Flexible / Any time'}
               </span>
             </div>
@@ -336,52 +357,55 @@ export default function ProfilePage() {
         {/* ========================================================================= */}
         {/* PROFILE COMPLETENESS (Computed Strictly from Real Fields)                 */}
         {/* ========================================================================= */}
-        <div className="rounded-3xl bg-slate-900/80 border border-slate-800 p-6 backdrop-blur-xl space-y-4">
+        <div className="rounded-2xl bg-[#090d16] border border-slate-800 p-6 space-y-4 shadow-xl">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
-              <h3 className="text-sm font-bold text-white tracking-tight flex items-center gap-2">
+              <div className="text-[10px] font-mono font-bold text-red-400 uppercase tracking-wider mb-1">
+                // PROFILE VERIFICATION READINESS
+              </div>
+              <h3 className="text-base font-black text-white uppercase tracking-tight flex items-center gap-2">
                 <span>Profile Completeness</span>
-                <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
-                  Real Field Verification
+                <span className="text-[10px] font-mono text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+                  VERIFIED ATTRIBUTES
                 </span>
               </h3>
-              <p className="text-xs text-slate-400 mt-0.5">
+              <p className="text-xs text-slate-400 mt-0.5 font-mono">
                 Calculated based on your completed academic data, skill sets, and schedule.
               </p>
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="text-xl font-black font-mono text-emerald-400">
+              <span className="text-2xl font-black font-mono text-amber-400">
                 {completeness.score}%
               </span>
-              <span className="text-xs text-slate-400">
+              <span className="text-xs text-slate-400 font-mono">
                 ({completeness.items.filter((i) => i.completed).length} of{' '}
                 {completeness.items.length} fields)
               </span>
             </div>
           </div>
 
-          {/* Visual Progress Bar */}
-          <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
+          {/* Visual Flame Progress Bar */}
+          <div className="h-2 w-full bg-slate-900 rounded-full overflow-hidden border border-slate-800">
             <div
-              className="h-full bg-gradient-to-r from-emerald-500 via-teal-400 to-blue-500 transition-all duration-700 ease-out"
+              className="h-full bg-gradient-to-r from-red-500 via-orange-500 to-amber-400 transition-all duration-700 ease-out"
               style={{ width: `${completeness.score}%` }}
             />
           </div>
 
           {/* Checklist Items */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-xs">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 pt-1 text-xs font-mono">
             {completeness.items.map((item) => (
               <div
                 key={item.id}
-                className={`p-2.5 rounded-xl border flex items-center gap-2 transition-all ${
+                className={`p-2.5 rounded-lg border flex items-center gap-2 transition-all ${
                   item.completed
-                    ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-300'
-                    : 'bg-slate-950/40 border-slate-800 text-slate-500'
+                    ? 'bg-[#030712] border-red-500/30 text-slate-200'
+                    : 'bg-[#030712] border-slate-800 text-slate-500'
                 }`}
               >
                 {item.completed ? (
-                  <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 stroke-[3]" />
+                  <Check className="w-3.5 h-3.5 text-amber-400 shrink-0 stroke-[3]" />
                 ) : (
                   <AlertCircle className="w-3.5 h-3.5 text-slate-600 shrink-0" />
                 )}

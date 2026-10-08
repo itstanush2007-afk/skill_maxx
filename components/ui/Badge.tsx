@@ -17,12 +17,12 @@ export const Badge: React.FC<BadgeProps> = ({
   className = '',
 }) => {
   const variantStyles = {
-    default: 'bg-slate-800 text-slate-300 border-slate-700',
-    success: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
-    warning: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
-    info: 'bg-blue-500/10 text-blue-400 border-blue-500/30',
-    purple: 'bg-purple-500/10 text-purple-400 border-purple-500/30',
-    amber: 'bg-orange-500/10 text-orange-400 border-orange-500/30',
+    default: 'bg-[#090d16] text-slate-300 border-slate-800 font-mono',
+    success: 'bg-red-500/10 text-red-400 border-red-500/30 font-mono',
+    warning: 'bg-amber-500/10 text-amber-400 border-amber-500/30 font-mono',
+    info: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30 font-mono',
+    purple: 'bg-purple-500/10 text-purple-400 border-purple-500/30 font-mono',
+    amber: 'bg-orange-500/10 text-orange-400 border-orange-500/30 font-mono',
   };
 
   const sizeStyles = {

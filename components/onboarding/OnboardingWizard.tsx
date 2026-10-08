@@ -305,13 +305,13 @@ export const OnboardingWizard: React.FC<{ initialUserId?: string }> = ({
   if (isLoadingProfile) {
     return (
       <div className="w-full max-w-3xl mx-auto py-16 px-4 text-center space-y-4">
-        <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 mx-auto flex items-center justify-center text-emerald-400">
+        <div className="w-12 h-12 rounded-2xl bg-red-500/10 border border-red-500/20 mx-auto flex items-center justify-center text-red-400">
           <Loader2 className="w-6 h-6 animate-spin" />
         </div>
         <div className="space-y-1">
-          <h3 className="text-base font-bold text-white">Loading Your Profile...</h3>
-          <p className="text-xs text-slate-400">
-            Checking Supabase for your existing skills and preferences.
+          <h3 className="text-base font-bold text-white font-mono uppercase tracking-tight">Loading Your Profile...</h3>
+          <p className="text-xs text-slate-400 font-mono">
+            // Checking Supabase for your existing skills and preferences.
           </p>
         </div>
       </div>
@@ -347,17 +347,17 @@ export const OnboardingWizard: React.FC<{ initialUserId?: string }> = ({
     <div className="w-full max-w-3xl mx-auto space-y-8 py-6 px-4 sm:px-6">
       {/* Existing Profile Notification */}
       {isEditingExisting && (
-        <div className="flex items-center justify-between p-3.5 rounded-2xl bg-slate-900/90 border border-emerald-500/30 text-xs text-slate-200">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 p-3.5 rounded-2xl bg-[#090d16] border border-amber-500/30 text-xs text-slate-200">
           <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-emerald-400" />
-            <span>
-              Loaded your existing profile for <strong>{fullName}</strong>. Any changes will update your public student card.
+            <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
+            <span className="font-mono text-xs">
+              // LOADED ACTIVE PROFILE FOR <strong className="text-white">{fullName}</strong>. Edits will sync to student card.
             </span>
           </div>
           <button
             type="button"
             onClick={() => router.push('/dashboard')}
-            className="text-xs text-emerald-400 hover:text-emerald-300 font-medium underline shrink-0 ml-2"
+            className="text-xs text-amber-400 hover:text-amber-300 font-mono font-medium underline shrink-0 sm:ml-2 uppercase"
           >
             Cancel & Return
           </button>
@@ -366,15 +366,15 @@ export const OnboardingWizard: React.FC<{ initialUserId?: string }> = ({
 
       {/* Dynamic Intro Header */}
       <div className="text-center max-w-xl mx-auto space-y-2">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>{isEditingExisting ? 'Edit Profile' : 'Student Onboarding'}</span>
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-mono tracking-wider uppercase">
+          <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+          <span>// STEP-BY-STEP PARTICIPANT PROGRESSION</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">
           {isEditingExisting ? 'Update Your Skill Profile' : 'Build Your SkillMaxx Profile'}
         </h1>
-        <p className="text-xs sm:text-sm text-slate-400">
-          Tell your campus peers what skills you can share and what you want to master in exchange.
+        <p className="text-xs sm:text-sm text-slate-400 font-mono">
+          // DEFINE TECHNICAL SUPERPOWERS & DESIRED GROWTH ASPIRATIONS
         </p>
       </div>
 
@@ -391,7 +391,7 @@ export const OnboardingWizard: React.FC<{ initialUserId?: string }> = ({
       />
 
       {/* Card Wrapper */}
-      <div className="rounded-3xl bg-slate-900/70 border border-slate-800 p-6 sm:p-8 backdrop-blur-xl shadow-xl shadow-black/40">
+      <div className="rounded-2xl bg-[#090d16] border border-slate-800 p-4 sm:p-8 backdrop-blur-xl shadow-xl shadow-black/60">
         {/* Step Views */}
         {currentStep === 1 && (
           <Step1AboutYou
@@ -499,7 +499,13 @@ export const OnboardingWizard: React.FC<{ initialUserId?: string }> = ({
         )}
 
         {/* Wizard Navigation Footer */}
-        <div className="mt-8 pt-6 border-t border-slate-800 flex items-center justify-between gap-4">
+        <div
+          className={`mt-8 pt-6 border-t border-slate-800 flex ${
+            currentStep === STEPS.length
+              ? 'flex-col sm:flex-row items-stretch sm:items-center'
+              : 'items-center'
+          } justify-between gap-3`}
+        >
           <Button
             type="button"
             variant="secondary"
@@ -507,6 +513,9 @@ export const OnboardingWizard: React.FC<{ initialUserId?: string }> = ({
             disabled={currentStep === 1 || isSaving}
             onClick={handleBack}
             icon={<ArrowLeft className="w-4 h-4" />}
+            className={`bg-[#1C1833] border border-purple-900/40 text-slate-300 hover:text-white rounded-xl ${
+              currentStep === STEPS.length ? 'w-full sm:w-auto order-2 sm:order-1' : ''
+            }`}
           >
             Back
           </Button>
@@ -517,7 +526,7 @@ export const OnboardingWizard: React.FC<{ initialUserId?: string }> = ({
               variant="primary"
               size="md"
               onClick={handleNext}
-              className="gap-2"
+              className="gap-2 bg-[#7B57FF] hover:bg-[#6D44FF] text-white font-semibold text-xs tracking-wide shadow-md shadow-purple-500/20 active:scale-[0.98] border-0 rounded-xl px-5 py-2.5"
             >
               <span>Continue</span>
               <ArrowRight className="w-4 h-4" />
@@ -526,10 +535,10 @@ export const OnboardingWizard: React.FC<{ initialUserId?: string }> = ({
             <Button
               type="button"
               variant="primary"
-              size="lg"
+              size="md"
               isLoading={isSaving}
               onClick={handleSubmit}
-              className="bg-emerald-400 hover:bg-emerald-300 shadow-emerald-500/30 text-black font-bold"
+              className="bg-[#7B57FF] hover:bg-[#6D44FF] shadow-md shadow-purple-500/25 text-white font-semibold text-xs sm:text-sm px-6 py-3 w-full sm:w-auto order-1 sm:order-2 rounded-xl tracking-wide active:scale-[0.98] border-0"
               icon={<Check className="w-5 h-5 stroke-[3]" />}
             >
               {isEditingExisting ? 'Save & Update Profile' : 'Save & Launch Dashboard'}
